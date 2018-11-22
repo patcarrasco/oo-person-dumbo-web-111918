@@ -2,61 +2,85 @@
 require 'pry'
 
 class Person
+    attr_reader :name, :bank_account, :happiness, :hygiene
+    attr_writer :bank_account
 
-
-  def initialize(name, bank_account = 25, happiness = 8, hygiene = 8)
+    #here we are establishing the variables 
+  def initialize(name)
     @name = name
-    @bank_account = bank_account
-    @happiness = happiness
-    @hygiene = hygiene
+    @happiness = 8
+    @hygiene = 8
+    @bank_account = 25
   end
 
-  attr_reader :name, :hygiene, :happiness
-  attr_accessor :bank_account
-
-
-
-
-  def hygiene=(num)
-    if (@hygiene + num) >= 0 && (@hygiene + num) <= 10
-      @hygiene = num
-      # binding.pry
+  #Writter(allows us to overwrite instance variables)
+def hygiene=(num)
+    if num > 10
+        @hygiene = 10
+    elsif num < 0
+        @hygiene =0    
+    else
+        @hygiene = num
     end
-  end
-
-
+end
+  #Writter(allows us to overwrite instance variables)
   def happiness=(num)
-    if (@happiness + num) >= 0 && (@happiness + num) <= 10
-      @happiness = num
-    end
-  end
-
-
-  def clean?
-    @hygiene > 7
+        if num > 10
+            @happiness = 10
+        elsif num < 0
+            @happiness =0    
+        else
+            @happiness = num
+        end
   end
 
   def happy?
     @happiness > 7
   end
 
+  def clean?
+    @hygiene > 7
+  end
+
   def get_paid(salary)
     @bank_account += salary
-    "all about the benjamins"
+    return "all about the benjamins"
   end
 
   def take_bath
-    hygiene=(4)
+    self.hygiene = (@hygiene + 4)
+    # hygiene = (@hygiene + 4)  
     "♪ Rub-a-dub just relaxing in the tub ♫"
   end
 
-  # def work_out
-  #   @hygiene -= 3
-  # end
+  def work_out
+    self.hygiene = (@hygiene - 3)
+    self.happiness = (@happiness + 2)
+    "♪ another one bites the dust ♫"
+  end
 
-  # def call_friend(person_name)
-  #   person_name.happiness(3)
-  # end
+  def call_friend(friend)
+    self.happiness += 3
+    friend.happiness +=3
+    return "Hi #{friend.name}! It's #{self.name}. How are you?"
+  end
+
+
+def start_conversation(friend,topic)
+    if topic == "politics"
+        self.happiness -=2
+        friend.happiness -=2
+        return "blah blah partisan blah lobbyist"
+        # binding.pry
+    elsif topic == "weather"
+        self.happiness +=1
+        friend.happiness +=1
+        return "blah blah sun blah rain"
+    else
+        return "blah blah blah blah blah"
+    end
+end
 end
 
-binding.pry
+
+# binding.pry
